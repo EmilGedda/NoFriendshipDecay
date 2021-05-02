@@ -1,0 +1,10 @@
+﻿{
+  "Name": "No Friendship Decay",
+  "Author": "gedda",
+  "Version": "1.0.0",
+  "Description": "Prevents the slow decay of friendship with animals and people.",
+  "UniqueID": "Gedda.NoFriendshipDecay",
+  "EntryDll": "NoFriendshipDecay.dll",
+  "MinimumApiVersion": "3.9.0",
+  "UpdateKeys": []
+}
