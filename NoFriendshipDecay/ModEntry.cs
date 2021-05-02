@@ -8,11 +8,9 @@ namespace NoFriendshipDecay
 {
     public class Config
     {
-        /// <summary>Whether se should be prevented from having friendship decay. Effects everyone
-        /// but the spouse if they are married.</summary>
+        /// <summary>Whether peoples' friendship decay should be prevented.</summary>
         public bool PreventPeopleFriendshipDecay = true;
-        /// <summary>Whether animals should be prevented from having friendship decay. Due to SMAPI limitations you have
-        /// to sleep in the bed for this to work.</summary>
+        /// <summary>Whether farm animals' friendship decay should be prevented.</summary>
         public bool PreventAnimalFriendshipDecay = true;
     }
 
@@ -32,6 +30,7 @@ namespace NoFriendshipDecay
                 helper.Events.GameLoop.DayEnding += EndDay;
         }
 
+        /// <summary>Enumerates all people a farmer can befriend.</summary>
         private static IEnumerable<Friendship> GetFriends()
         {
             var players = Game1.getAllFarmers();
@@ -45,8 +44,6 @@ namespace NoFriendshipDecay
 
                 foreach (var farmer in farmers)
                 {
-                    //Set the flag for having talked to that character, but don't add any points.
-                    //The player can talk to the person themselves and still get the 20 points.
                     if (farmer.friendshipData.TryGetValue(character.Name, out var friendship))
                     {
                         yield return friendship;
@@ -58,7 +55,7 @@ namespace NoFriendshipDecay
         /// <summary>Before the day is done, we need to set all the talked-to flags.</summary>
         private void EndDay(object sender, DayEndingEventArgs e)
         {
-            //This is a host-only mod:
+            // This is a host-only mod
             if (!Context.IsMainPlayer)
                 return;
 
@@ -74,8 +71,8 @@ namespace NoFriendshipDecay
             {
                 foreach (var friend in GetFriends())
                 {
-                    //Set the flag for having talked to that character, but don't add any points.
-                    //The player can talk to the person themselves and still get the 20 points.
+                    // Set the flag for having talked to that character, but don't add any points.
+                    // The player can talk to the person themselves and still get the 20 points.
                     friend.TalkedToToday = true;
                 }
             }
